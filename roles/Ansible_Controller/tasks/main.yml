@@ -1,0 +1,7 @@
+    - name: Bu gorev, Dosyadan değişkenleri okur.
+      include_vars: /home/theadmin/AnsibleRolDosya/roles/vars/gitrepo.yml
+
+    - name: Bu görev, GitRepo'dan projenin kaynak kodlarını indirme işlemini gerçekleştirir.
+      git:
+        repo: "{{ repoadres }}"
+        dest: "{{ repoklasor }}"

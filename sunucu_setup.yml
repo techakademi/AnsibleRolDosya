@@ -1,0 +1,46 @@
+---
+  - hosts: all,!Ansible_Controller
+    tags: always
+    #tags: never
+    become: true
+    tasks:
+
+# Bu görev, Sunucu güncellemeleri için hazırlanmıştır.
+    - name: Bu gorev, Ubuntu Linux Update & Upgrade işlemlerini gerçekleştirir
+      ansible.builtin.package:
+          upgrade: dist
+          update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Bu gorev, Rocky Linux Update & Upgrade işlemlerini gerçekleştirir.
+      ansible.builtin.package:
+          update_only: yes
+          update_cache: yes
+      when: ansible_distribution == "Rocky"
+
+# Bu Rol, Ansible Controller için kullanılmaktadır.
+  - hosts: Ansible_Controller
+    connection: local
+    become: true
+    roles:
+      - Ansible_Controller
+
+# Bu Rol, Web Sunucuları için kullanılmaktadır.
+  - hosts: web_sunuculari
+    become: true
+    roles:
+      - Web_Sunuculari
+
+# Bu Rol, DB Sunucuları için kullanılmaktadır.
+  - hosts: veritabani_sunucusu
+    become: true
+    roles:
+      - Veritabani_Sunucusu
+    tags: veritabani
+
+# Bu Rol, FTP Sunucuları için kullanılmaktadır.
+  - hosts: ftp_sunucusu
+    become: true
+    roles:
+      - Ftp_Sunucusu
+    tags: ftpSunucusu

@@ -1,0 +1,8 @@
+    - name: Bu gorev, Dosyadan değişkenleri okur.
+      include_vars: /home/theadmin/AnsibleRolDosya/roles/vars/apache_varsayilan.yml
+
+    - name: Bu gorev, Ubuntu Suncusuna Mariadb Yüklemesini gerçekleştirir.
+      ansible.builtin.package:
+          name:
+            - "{{ db_sunucusu }}"
+          state: latest
